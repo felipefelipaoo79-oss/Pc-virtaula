@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC Virtual</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0878d1;overflow:hidden;color:#111}
+.desktop{height:100vh;padding:18px;position:relative;background:linear-gradient(135deg,#0878d1,#5bb8f5)}
+.icon{width:78px;color:white;text-align:center;margin:4px 0 18px;cursor:pointer;text-shadow:0 1px 3px #333}
+.icon .pic{font-size:38px}.icon span{font-size:13px}
+.taskbar{position:absolute;bottom:0;left:0;right:0;height:48px;background:rgba(25,25,25,.9);display:flex;align-items:center;padding:5px 10px;color:white}
+.start{font-size:25px;padding:7px 14px;cursor:pointer}.clock{margin-left:auto;font-size:13px}
+.window{position:absolute;top:80px;left:120px;width:min(760px,85vw);height:min(500px,70vh);background:#f5f5f5;border-radius:7px;box-shadow:0 10px 35px #0007;overflow:hidden;display:none}
+.title{height:38px;background:#fff;display:flex;align-items:center;padding:0 12px;font-weight:bold}.close{margin-left:auto;border:0;background:#e81123;color:white;width:35px;height:28px;cursor:pointer}
+.content{padding:20px;height:calc(100% - 38px);overflow:auto}.startmenu{position:absolute;bottom:48px;left:8px;width:300px;background:#222e;color:white;padding:20px;border-radius:10px 10px 0 0;display:none}
+button{padding:10px 14px;border:0;border-radius:6px;cursor:pointer;margin:5px}textarea{width:100%;height:260px}
+</style>
+</head>
+<body>
+<div class="desktop">
+  <div class="icon" onclick="openWin('files')"><div class="pic">📁</div><span>Arquivos</span></div>
+  <div class="icon" onclick="openWin('browser')"><div class="pic">🌐</div><span>Navegador</span></div>
+  <div class="icon" onclick="openWin('terminal')"><div class="pic">⌨️</div><span>Terminal</span></div>
+
+  <div id="files" class="window">
+    <div class="title">📁 Explorador de Arquivos <button class="close" onclick="closeWin('files')">×</button></div>
+    <div class="content"><h2>Este PC</h2><p>📂 Documentos</p><p>📂 Downloads</p><p>📂 Imagens</p><p>💾 Disco Local (C:)</p></div>
+  </div>
+
+  <div id="browser" class="window">
+    <div class="title">🌐 Navegador <button class="close" onclick="closeWin('browser')">×</button></div>
+    <div class="content"><h2>PC Virtual</h2><p>Esta é a interface inicial do teu PC virtual no navegador.</p><p>O próximo estágio é conectar um ambiente de execução real ao navegador.</p></div>
+  </div>
+
+  <div id="terminal" class="window">
+    <div class="title">⌨️ Terminal <button class="close" onclick="closeWin('terminal')">×</button></div>
+    <div class="content"><pre id="out">PC Virtual Terminal
+Digite um comando abaixo.</pre><input id="cmd" placeholder="ex.: help" style="width:80%;padding:10px"><button onclick="run()">Executar</button></div>
+  </div>
+
+  <div id="menu" class="startmenu"><h2>PC Virtual</h2><button onclick="openWin('files');menu.style.display='none'">📁 Arquivos</button><button onclick="openWin('browser');menu.style.display='none'">🌐 Navegador</button><button onclick="openWin('terminal');menu.style.display='none'">⌨️ Terminal</button></div>
+  <div class="taskbar"><div class="start" onclick="menu.style.display=menu.style.display==='block'?'none':'block'">⊞</div><div>PC Virtual</div><div class="clock" id="clock"></div></div>
+</div>
+<script>
+function openWin(id){document.getElementById(id).style.display='block'}
+function closeWin(id){document.getElementById(id).style.display='none'}
+function run(){let c=document.getElementById('cmd').value.trim();let o=document.getElementById('out');if(c==='help')o.textContent+='\\nComandos: help, clear, whoami, date';else if(c==='clear')o.textContent='';else if(c==='whoami')o.textContent+='\\nusuario@pc-virtual';else if(c==='date')o.textContent+='\\n'+new Date().toLocaleString('pt-BR');else o.textContent+='\\nComando não encontrado: '+c}
+setInterval(()=>clock.textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),1000);
+</script>
+</body>
+</html>
